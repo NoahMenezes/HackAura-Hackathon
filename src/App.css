@@ -111,3 +111,88 @@ body {
   left: 0;
   z-index: 0;
 }
+/* src/Product.css */
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #0c0a1e;
+    color: #e0e0e0;
+    overflow-x: hidden;
+}
+
+#particles-js {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+.main-container {
+    background: rgba(22, 18, 48, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    z-index: 10;
+}
+
+.hero-glow {
+    text-shadow: 0 0 15px rgba(138, 92, 245, 0.6), 0 0 30px rgba(138, 92, 245, 0.4);
+}
+
+.file-drop-area {
+    transition: all 0.3s ease-in-out;
+    border-style: dashed;
+    border-color: rgba(138, 92, 245, 0.4);
+    background: rgba(138, 92, 245, 0.05);
+}
+
+.file-drop-area.dragover, .file-drop-area:hover {
+    background-color: rgba(138, 92, 245, 0.1);
+    border-color: rgba(138, 92, 245, 0.8);
+    transform: scale(1.02);
+}
+
+.btn-primary {
+    background: linear-gradient(90deg, #8A2BE2 0%, #4B0082 100%);
+    transition: all 0.3s ease;
+    box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
+
+.btn-primary:hover:not(:disabled) {
+    transform: scale(1.05);
+    box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
+}
+
+.btn-primary:disabled {
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Typewriter cursor effect */
+#transcriptOutput {
+    border-right: .15em solid #8A2BE2;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+    animation: blink-caret .75s step-end infinite;
+}
+
+@keyframes blink-caret {
+    from, to { border-color: transparent }
+    50% { border-color: #8A2BE2; }
+}
+
+/* Fade-in animation */
+.fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: fadeInAnimation 0.8s ease-out forwards;
+}
+
+@keyframes fadeInAnimation {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-const Header = ({ onLoginClick, onSignupClick }) => {
+const Header = ({ onLoginClick, onSignupClick, onProductClick }) => {
   return (
     <header className="py-4 px-4 sm:px-6 lg:px-8">
       <nav className="container mx-auto flex justify-between items-center">
@@ -15,7 +15,8 @@ const Header = ({ onLoginClick, onSignupClick }) => {
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-purple-400 transition-colors">
+              {/* Add the onClick handler for the Product link */}
+              <a href="#" onClick={onProductClick} className="hover:text-purple-400 transition-colors">
                 Product
               </a>
             </li>
@@ -57,7 +58,7 @@ const Header = ({ onLoginClick, onSignupClick }) => {
             </a>
           </li>
           <li>
-            <a href="#" className="block px-4 py-2 hover:bg-purple-900 rounded">
+            <a href="#" onClick={onProductClick} className="block px-4 py-2 hover:bg-purple-900 rounded">
               Product
             </a>
           </li>

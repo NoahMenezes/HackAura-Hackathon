@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Login from './components/Login';
 import Signup from './components/Signup';
+import Product from './components/Product'; // Import the new component
 import 'particles.js';
 import './App.css';
 
@@ -11,11 +12,11 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState('home');
 
   useEffect(() => {
-    if (currentPage === 'home') {
+    if (currentPage === 'home' || currentPage === 'product') {
       const menuBtn = document.getElementById('menu-btn');
       const mobileMenu = document.getElementById('mobile-menu');
       const toggleMenu = () => mobileMenu.classList.toggle('hidden');
-      menuBtn.addEventListener('click', toggleMenu);
+      if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
 
       const observer = new IntersectionObserver(
         (entries) => {
@@ -73,6 +74,11 @@ const App = () => {
     setCurrentPage('signup');
   };
 
+  const handleProductClick = (e) => {
+    e.preventDefault();
+    setCurrentPage('product');
+  };
+
   const handleGoBack = () => {
     setCurrentPage('home');
   };
@@ -94,12 +100,21 @@ const App = () => {
       </div>
     );
   }
+  
+  if (currentPage === 'product') {
+    return (
+      <div className="antialiased">
+        <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
+        <Product onGoBack={handleGoBack} />
+      </div>
+    );
+  }
 
   return (
     <div className="antialiased">
       <div id="particles-js"></div>
       <div className="relative z-10">
-        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} />
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} onProductClick={handleProductClick} />
 
         <main className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
