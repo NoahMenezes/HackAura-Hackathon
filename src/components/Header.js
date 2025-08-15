@@ -1,32 +1,17 @@
 import React from 'react';
 
-// The 'onHomeClick' prop is now being received and used.
-const Header = ({ onHomeClick, onLoginClick, onSignupClick, onProductClick, onResultsClick }) => {
+// The props for the removed links (onHomeClick, onProductClick, onResultsClick) have been taken out.
+const Header = ({ onLoginClick, onSignupClick }) => {
   return (
     <header className="py-4 px-4 sm:px-6 lg:px-8 relative z-10">
       <nav className="container mx-auto flex justify-between items-center">
+        {/* The title remains on the left. */}
         <div className="flex items-center space-x-8">
           <h1 className="text-2xl font-bold text-white">Secretary.AI</h1>
-          {/* Spacing is set to space-x-8 for a wider gap */}
-          <ul className="hidden md:flex space-x-8">
-            <li>
-              {/* The onHomeClick handler is now correctly attached to the Home link */}
-              <a href="#" onClick={onHomeClick} className="hover:text-purple-400 transition-colors">
-                Home
-              </a>
-            </li>
-            <li>
-              <a href="#" onClick={onProductClick} className="hover:text-purple-400 transition-colors">
-                Product
-              </a>
-            </li>
-            <li>
-              <a href="#" onClick={onResultsClick} className="hover:text-purple-400 transition-colors">
-                Results
-              </a>
-            </li>
-          </ul>
+          {/* The navigation links for Home, Product, and Results have been removed. */}
         </div>
+
+        {/* The Login and Sign Up buttons remain on the right for desktop view. */}
         <div className="hidden md:flex items-center space-x-4">
           <a href="#" onClick={onLoginClick} className="hover:text-purple-400 transition-colors">
             Login
@@ -35,6 +20,8 @@ const Header = ({ onHomeClick, onLoginClick, onSignupClick, onProductClick, onRe
             Sign Up
           </a>
         </div>
+
+        {/* The mobile menu button (hamburger icon) remains. */}
         <div className="md:hidden">
           <button id="menu-btn" className="text-white focus:outline-none">
             <svg
@@ -49,24 +36,12 @@ const Header = ({ onHomeClick, onLoginClick, onSignupClick, onProductClick, onRe
           </button>
         </div>
       </nav>
-      {/* Mobile Menu */}
+
+      {/* Mobile Menu: The links have been removed, but the container is kept for potential future use. */}
+      {/* You could add Login/Signup links here for a better mobile experience. */}
       <div id="mobile-menu" className="hidden md:hidden mt-4">
         <ul className="flex flex-col space-y-2">
-          <li>
-            <a href="#" onClick={onHomeClick} className="block px-4 py-2 hover:bg-purple-900 rounded">
-              Home
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={onProductClick} className="block px-4 py-2 hover:bg-purple-900 rounded">
-              Product
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={onResultsClick} className="block px-4 py-2 hover:bg-purple-900 rounded">
-              Results
-            </a>
-          </li>
+            {/* Intentionally left empty as requested */}
         </ul>
       </div>
     </header>

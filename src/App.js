@@ -4,12 +4,14 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import Results from './components/Results';
 import Product from './components/Product';
-import Start from './components/Start';
+// CHANGE 1: The 'Start' component is no longer needed, so we remove the import.
+// import Start from './components/Start'; 
 import 'particles.js';
 import './App.css';
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('start');
+  // CHANGE 2: Set the initial page to 'home' instead of 'start'.
+  const [currentPage, setCurrentPage] = useState('home');
 
   useEffect(() => {
     // This useEffect logic needs to be run on multiple pages
@@ -74,8 +76,8 @@ const App = () => {
   };
 
   const handleGoBack = () => {
-    // Go back to the start page from login/signup
-    setCurrentPage('start');
+    // CHANGE 3: The back button on the Login/Signup pages should now go to 'home'.
+    setCurrentPage('home');
   };
 
   const handleAuthSuccess = () => {
@@ -84,19 +86,8 @@ const App = () => {
 
   // --- Page Rendering Logic ---
 
-  if (currentPage === 'start') {
-    return (
-      <div className="antialiased">
-        <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
-        <div className="relative z-10">
-          <Start 
-            onNavigateToLogin={handleLoginClick} 
-            onNavigateToSignup={handleSignupClick} 
-          />
-        </div>
-      </div>
-    );
-  }
+  // The rendering block for the 'start' page has been completely removed.
+  // if (currentPage === 'start') { ... }
 
   if (currentPage === 'login') {
     return (
@@ -143,6 +134,7 @@ const App = () => {
   }
 
   // --- Default Page ('home') ---
+  // Since 'home' is now the initial state, this will be the first thing the user sees.
   return (
     <div className="antialiased">
       <div id="particles-js"></div>
@@ -165,8 +157,8 @@ const App = () => {
               Secretary.AI automatically transcribes, summarizes, and extracts key action items from your meetings. Stop taking notes and start focusing on the conversation.
             </p>
             <div className="fade-in-up" style={{ transitionDelay: '0.4s' }}>
-              {/* This button now correctly links to the Product page */}
-              <a href="#product" onClick={handleProductClick} className="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg">
+              {/* THIS IS THE MODIFIED LINE */}
+              <a href="#login" onClick={handleLoginClick} className="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg">
                 Get Started For Free
               </a>
             </div>
