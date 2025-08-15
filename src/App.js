@@ -4,7 +4,8 @@ import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import Product from './components/Product'; // Import the new component
+import Results from './components/Results';
+import Product from './components/Product';
 import 'particles.js';
 import './App.css';
 
@@ -12,56 +13,38 @@ const App = () => {
   const [currentPage, setCurrentPage] = useState('home');
 
   useEffect(() => {
-    if (currentPage === 'home' || currentPage === 'product') {
-      const menuBtn = document.getElementById('menu-btn');
-      const mobileMenu = document.getElementById('mobile-menu');
-      const toggleMenu = () => mobileMenu.classList.toggle('hidden');
-      if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
+    // This useEffect logic needs to be run on multiple pages, not just 'home'
+    const menuBtn = document.getElementById('menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const toggleMenu = () => mobileMenu.classList.toggle('hidden');
+    if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('visible');
-            }
-          });
-        },
-        { threshold: 0.1 }
-      );
-
-      const fadeUpElements = document.querySelectorAll('.fade-in-up');
-      fadeUpElements.forEach((el) => observer.observe(el));
-
-      if (window.particlesJS) {
-        window.particlesJS('particles-js', {
-          "particles": {
-            "number": { "value": 50, "density": { "enable": true, "value_area": 800 } },
-            "color": { "value": "#8A2BE2" },
-            "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" } },
-            "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
-            "size": { "value": 3, "random": true, "anim": { "enable": false } },
-            "line_linked": { "enable": true, "distance": 150, "color": "#4B0082", "opacity": 0.4, "width": 1 },
-            "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false }
-          },
-          "interactivity": {
-            "detect_on": "canvas",
-            "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
-            "modes": {
-              "grab": { "distance": 140, "line_linked": { "opacity": 1 } },
-              "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 },
-              "repulse": { "distance": 200, "duration": 0.4 },
-              "push": { "particles_nb": 4 },
-              "remove": { "particles_nb": 2 }
-            }
-          },
-          "retina_detect": true
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+          }
         });
-      }
-      return () => {
-        if (menuBtn) menuBtn.removeEventListener('click', toggleMenu);
-        fadeUpElements.forEach((el) => observer.unobserve(el));
-      };
+      },
+      { threshold: 0.1 }
+    );
+
+    const fadeUpElements = document.querySelectorAll('.fade-in-up');
+    fadeUpElements.forEach((el) => observer.observe(el));
+
+    if (window.particlesJS) {
+      window.particlesJS('particles-js', {
+        "particles": { "number": { "value": 50, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8A2BE2" }, "shape": { "type": "circle", "stroke": { "width": 0, "color": "#000000" } }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true, "anim": { "enable": false } }, "line_linked": { "enable": true, "distance": 150, "color": "#4B0082", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false } },
+        "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 }, "repulse": { "distance": 200, "duration": 0.4 }, "push": { "particles_nb": 4 }, "remove": { "particles_nb": 2 } } },
+        "retina_detect": true
+      });
     }
+
+    return () => {
+      if (menuBtn) menuBtn.removeEventListener('click', toggleMenu);
+      fadeUpElements.forEach((el) => observer.unobserve(el));
+    };
   }, [currentPage]);
 
   const handleLoginClick = (e) => {
@@ -77,6 +60,11 @@ const App = () => {
   const handleProductClick = (e) => {
     e.preventDefault();
     setCurrentPage('product');
+  };
+    
+  const handleResultsClick = (e) => {
+      e.preventDefault();
+      setCurrentPage('results');
   };
 
   const handleGoBack = () => {
@@ -109,12 +97,21 @@ const App = () => {
       </div>
     );
   }
+  
+  if (currentPage === 'results') {
+    return (
+      <div className="antialiased">
+        <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
+        <Results onGoBack={handleGoBack} />
+      </div>
+    );
+  }
 
   return (
     <div className="antialiased">
       <div id="particles-js"></div>
       <div className="relative z-10">
-        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} onProductClick={handleProductClick} />
+        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} onProductClick={handleProductClick} onResultsClick={handleResultsClick} />
 
         <main className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
@@ -209,13 +206,15 @@ const App = () => {
             </div>
           </section>
         </main>
-
-        {/* Footer */}
+        
+        {/* Footer with a large Secretary.AI title */}
         <footer className="bg-black bg-opacity-20 mt-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
-              
-              
+            <div className="w-full text-center">
+                <h2 className="text-6xl md:text-8xl font-black text-white hero-glow mb-2 tracking-widest">
+                    SECRETARY.AI
+                </h2>
+                <p className="text-lg md:text-xl text-gray-400">The future of meetings.</p>
             </div>
             <div className="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500">
               <p>&copy; 2025 Secretary.AI. All rights reserved.</p>

@@ -2,9 +2,9 @@
 
 import React from 'react';
 
-const Header = ({ onLoginClick, onSignupClick, onProductClick }) => {
+const Header = ({ onLoginClick, onSignupClick, onProductClick, onResultsClick }) => {
   return (
-    <header className="py-4 px-4 sm:px-6 lg:px-8">
+    <header className="py-4 px-4 sm:px-6 lg:px-8 relative z-10">
       <nav className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-8">
           <h1 className="text-2xl font-bold text-white">Secretary.AI</h1>
@@ -15,13 +15,12 @@ const Header = ({ onLoginClick, onSignupClick, onProductClick }) => {
               </a>
             </li>
             <li>
-              {/* Add the onClick handler for the Product link */}
               <a href="#" onClick={onProductClick} className="hover:text-purple-400 transition-colors">
                 Product
               </a>
             </li>
             <li>
-              <a href="#" className="hover:text-purple-400 transition-colors">
+              <a href="#" onClick={onResultsClick} className="hover:text-purple-400 transition-colors">
                 Results
               </a>
             </li>
@@ -63,7 +62,7 @@ const Header = ({ onLoginClick, onSignupClick, onProductClick }) => {
             </a>
           </li>
           <li>
-            <a href="#" className="block px-4 py-2 hover:bg-purple-900 rounded">
+            <a href="#" onClick={onResultsClick} className="block px-4 py-2 hover:bg-purple-900 rounded">
               Results
             </a>
           </li>
