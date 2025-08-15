@@ -214,45 +214,8 @@ const App = () => {
         <footer className="bg-black bg-opacity-20 mt-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
-              <div className="col-span-2 md:col-span-4 lg:col-span-1 mb-8 lg:mb-0">
-                <h2 className="text-2xl font-bold text-white">Secretary.AI</h2>
-                <p className="text-gray-400 mt-2">The future of meetings.</p>
-              </div>
-              <div>
-                <h3 className="font-semibold text-white tracking-wider uppercase">Product</h3>
-                <ul className="mt-4 space-y-2">
-                  <li><a href="#" className="text-gray-400 hover:text-white">Features</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Integrations</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Pricing</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">API</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-white tracking-wider uppercase">Use Cases</h3>
-                <ul className="mt-4 space-y-2">
-                  <li><a href="#" className="text-gray-400 hover:text-white">Sales</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Marketing</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Recruiting</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Engineering</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-white tracking-wider uppercase">Company</h3>
-                <ul className="mt-4 space-y-2">
-                  <li><a href="#" className="text-gray-400 hover:text-white">About</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Careers</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Blog</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Contact</a></li>
-                </ul>
-              </div>
-              <div>
-                <h3 className="font-semibold text-white tracking-wider uppercase">Contact & Help</h3>
-                <ul className="mt-4 space-y-2">
-                  <li><a href="#" className="text-gray-400 hover:text-white">Request Demo</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Help Center</a></li>
-                  <li><a href="#" className="text-gray-400 hover:text-white">Partnerships</a></li>
-                </ul>
-              </div>
+              
+              
             </div>
             <div className="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500">
               <p>&copy; 2024 Secretary.AI. All rights reserved.</p>
