@@ -343,3 +343,27 @@ footer .text-lg:hover {
   transform: scale(1.05); /* A slightly larger 5% enlargement */
   cursor: pointer;
 }
+.welcome-heading {
+  /* Smooth transition for the transform property */
+  transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  cursor: pointer;
+}
+
+.welcome-heading:hover {
+  /* Enlarge the text by 5% on hover */
+  transform: scale(1.05);
+}
+
+/* --- Styles for the Product Page File Drop Area --- */
+.file-drop-zone {
+  transition: all 0.3s ease-in-out;
+  border-style: dashed;
+  border-color: rgba(138, 92, 245, 0.4);
+  background: rgba(138, 92, 245, 0.05);
+}
+
+.file-drop-zone:hover, .file-drop-zone.dragover {
+  background-color: rgba(138, 92, 245, 0.1);
+  border-color: rgba(138, 92, 245, 0.8);
+  transform: scale(1.02);
+}
