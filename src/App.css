@@ -224,3 +224,122 @@ body {
 .tab-btn:hover:not(.active) {
   color: #ffffff; /* Change text to white on hover for inactive tabs */
 }
+/* src/index.css */
+
+/* You'll need to install Tailwind CSS and add it to your project first */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', sans-serif;
+  background-color: #0c0a1e;
+  color: #e0e0e0;
+  overflow-x: hidden;
+}
+
+.gradient-bg {
+  background: radial-gradient(circle at 50% 0%, rgba(58, 38, 179, 0.3) 0%, rgba(12, 10, 30, 0) 40%);
+}
+
+.hero-glow {
+  text-shadow: 0 0 15px rgba(138, 92, 245, 0.6), 0 0 30px rgba(138, 92, 245, 0.4);
+}
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94), box-shadow 0.5s ease; /* Adjusted transition for a smoother effect */
+  backdrop-filter: blur(10px);
+}
+
+.feature-card:hover {
+  transform: translateY(-15px) scale(1.05); /* Lifts the card and enlarges it */
+  border-color: #8A2BE2; /* Adds a purple border on hover */
+  box-shadow: 0 10px 40px rgba(138, 43, 226, 0.4), 0 0 20px rgba(138, 43, 226, 0.2); /* Creates a more pronounced, glowing effect */
+}
+
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+}
+
+.fade-in-up.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.btn-primary {
+  background: linear-gradient(90deg, #8A2BE2 0%, #4B0082 100%);
+  transition: all 0.3s ease;
+  box-shadow: 0 0 15px rgba(138, 43, 226, 0.5);
+}
+
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px rgba(138, 43, 226, 0.8);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.2);
+  transform: scale(1.05);
+}
+
+#particles-js {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+/* src/index.css */
+
+.feature-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  /* Smoother transition for transform, shadow, and border */
+  transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+  backdrop-filter: blur(10px);
+}
+
+.feature-card:hover {
+  /* Lifts the card up and enlarges it */
+  transform: translateY(-15px) scale(1.05); 
+  /* Adds a purple border on hover */
+  border-color: #8A2BE2; 
+  /* Creates a more pronounced, glowing purple effect */
+  box-shadow: 0 10px 40px rgba(138, 43, 226, 0.4), 0 0 20px rgba(138, 43, 226, 0.2); 
+}
+
+/* src/index.css */
+
+/* Add this to the end of the file */
+
+/* --- Footer Hover Effects --- */
+
+/* Base styles for a smooth transition */
+footer h2,
+footer p {
+  transition: transform 0.3s ease-in-out;
+}
+
+/* Enlarge the 'SECRETARY.AI' title on hover */
+footer h2:hover {
+  transform: scale(1.03); /* A subtle 3% enlargement */
+  cursor: pointer;
+}
+
+/* Enlarge 'The future of meetings' subtitle on hover */
+footer .text-lg:hover {
+  transform: scale(1.05); /* A slightly larger 5% enlargement */
+  cursor: pointer;
+}

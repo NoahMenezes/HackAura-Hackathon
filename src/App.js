@@ -217,7 +217,7 @@ const App = () => {
                 <p className="text-lg md:text-xl text-gray-400">The future of meetings.</p>
             </div>
             <div className="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500">
-              <p>&copy; 2025 Secretary.AI. All rights reserved.</p>
+              <p><a href="https://opensource.org/license/mit"> &copy; 2025 Secretary.AI. All rights reserved.</a></p>
             </div>
           </div>
         </footer>
