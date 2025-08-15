@@ -196,3 +196,34 @@ body {
         transform: translateY(0);
     }
 }
+
+/* src/Results.css */
+
+/* ... other styles ... */
+
+.tab-btn {
+  /* This is the base style for your tab buttons */
+  transition: color 0.3s ease, border-color 0.3s ease;
+  border-bottom: 2px solid transparent; /* Set a transparent border at the bottom */
+  color: #a0aec0; /* A default text color for inactive tabs */
+  background: none; /* Ensure no background on inactive tabs */
+  cursor: pointer;
+  padding: 0.75rem 0; /* Adjust padding as needed for spacing */
+}
+
+/* This rule applies when the button has the 'active' class */
+.tab-btn.active {
+  color: #8A2BE2; /* The purple text color */
+  border-bottom: 2px solid #8A2BE2; /* The purple underline */
+  /* You can add other styles here for the active state, like a slight background tint */
+  background: rgba(138, 43, 226, 0.1);
+}
+
+.tab-btn:hover {
+  color: #d0bfff; /* A lighter purple for hover state */
+}
+
+/* You might want to remove the existing border-b rule from the parent div if it conflicts */
+.border-b {
+  border-bottom: 1px solid #4a5568;
+}
