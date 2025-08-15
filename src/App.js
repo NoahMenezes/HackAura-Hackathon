@@ -67,16 +67,17 @@ const App = () => {
     e.preventDefault();
     setCurrentPage('results');
   };
+  
+  const handleHomeClick = (e) => {
+    e.preventDefault();
+    setCurrentPage('home');
+  };
 
   const handleGoBack = () => {
     // Go back to the start page from login/signup
     setCurrentPage('start');
   };
 
-  /**
-   * This function is called after a successful login or signup
-   * to navigate the user to the main content page.
-   */
   const handleAuthSuccess = () => {
     setCurrentPage('home');
   };
@@ -146,7 +147,13 @@ const App = () => {
     <div className="antialiased">
       <div id="particles-js"></div>
       <div className="relative z-10">
-        <Header onLoginClick={handleLoginClick} onSignupClick={handleSignupClick} onProductClick={handleProductClick} onResultsClick={handleResultsClick} />
+        <Header 
+            onHomeClick={handleHomeClick}
+            onLoginClick={handleLoginClick} 
+            onSignupClick={handleSignupClick} 
+            onProductClick={handleProductClick} 
+            onResultsClick={handleResultsClick} 
+        />
 
         <main className="container mx-auto px-4 sm:px-6 lg:px-8">
           {/* Hero Section */}
@@ -158,7 +165,8 @@ const App = () => {
               Secretary.AI automatically transcribes, summarizes, and extracts key action items from your meetings. Stop taking notes and start focusing on the conversation.
             </p>
             <div className="fade-in-up" style={{ transitionDelay: '0.4s' }}>
-              <a href="#signup" onClick={handleSignupClick} className="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg">
+              {/* This button now correctly links to the Product page */}
+              <a href="#product" onClick={handleProductClick} className="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg">
                 Get Started For Free
               </a>
             </div>

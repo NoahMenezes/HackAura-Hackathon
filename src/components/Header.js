@@ -1,16 +1,17 @@
-// src/components/Header.js
-
 import React from 'react';
 
-const Header = ({ onLoginClick, onSignupClick, onProductClick, onResultsClick }) => {
+// The 'onHomeClick' prop is now being received and used.
+const Header = ({ onHomeClick, onLoginClick, onSignupClick, onProductClick, onResultsClick }) => {
   return (
     <header className="py-4 px-4 sm:px-6 lg:px-8 relative z-10">
       <nav className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-8">
           <h1 className="text-2xl font-bold text-white">Secretary.AI</h1>
-          <ul className="hidden md:flex space-x-6">
+          {/* Spacing is set to space-x-8 for a wider gap */}
+          <ul className="hidden md:flex space-x-8">
             <li>
-              <a href="#" className="hover:text-purple-400 transition-colors">
+              {/* The onHomeClick handler is now correctly attached to the Home link */}
+              <a href="#" onClick={onHomeClick} className="hover:text-purple-400 transition-colors">
                 Home
               </a>
             </li>
@@ -52,7 +53,7 @@ const Header = ({ onLoginClick, onSignupClick, onProductClick, onResultsClick })
       <div id="mobile-menu" className="hidden md:hidden mt-4">
         <ul className="flex flex-col space-y-2">
           <li>
-            <a href="#" className="block px-4 py-2 hover:bg-purple-900 rounded">
+            <a href="#" onClick={onHomeClick} className="block px-4 py-2 hover:bg-purple-900 rounded">
               Home
             </a>
           </li>
@@ -64,16 +65,6 @@ const Header = ({ onLoginClick, onSignupClick, onProductClick, onResultsClick })
           <li>
             <a href="#" onClick={onResultsClick} className="block px-4 py-2 hover:bg-purple-900 rounded">
               Results
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={onLoginClick} className="block px-4 py-2 hover:bg-purple-900 rounded">
-              Login
-            </a>
-          </li>
-          <li>
-            <a href="#" onClick={onSignupClick} className="block px-4 py-2 bg-white text-purple-700 font-semibold rounded text-center">
-              Sign Up
             </a>
           </li>
         </ul>
