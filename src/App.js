@@ -2,15 +2,13 @@ import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import Results from './components/Results';
-import Product from './components/Product';
-// CHANGE 1: The 'Start' component is no longer needed, so we remove the import.
-// import Start from './components/Start'; 
+// The 'Product' and 'Results' components are no longer needed, so their imports are removed.
+// import Product from './components/Product'; 
+// import Results from './components/Results';
 import 'particles.js';
 import './App.css';
 
 const App = () => {
-  // CHANGE 2: Set the initial page to 'home' instead of 'start'.
   const [currentPage, setCurrentPage] = useState('home');
 
   useEffect(() => {
@@ -60,23 +58,14 @@ const App = () => {
     setCurrentPage('signup');
   };
 
-  const handleProductClick = (e) => {
-    e.preventDefault();
-    setCurrentPage('product');
-  };
-    
-  const handleResultsClick = (e) => {
-    e.preventDefault();
-    setCurrentPage('results');
-  };
-  
+  // Removed handleProductClick and handleResultsClick as they are no longer needed.
+
   const handleHomeClick = (e) => {
     e.preventDefault();
     setCurrentPage('home');
   };
 
   const handleGoBack = () => {
-    // CHANGE 3: The back button on the Login/Signup pages should now go to 'home'.
     setCurrentPage('home');
   };
 
@@ -85,9 +74,6 @@ const App = () => {
   };
 
   // --- Page Rendering Logic ---
-
-  // The rendering block for the 'start' page has been completely removed.
-  // if (currentPage === 'start') { ... }
 
   if (currentPage === 'login') {
     return (
@@ -111,30 +97,9 @@ const App = () => {
     );
   }
   
-  if (currentPage === 'product') {
-    return (
-      <div className="antialiased">
-        <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
-        <div className="relative z-10">
-          <Product onGoBack={() => setCurrentPage('home')} />
-        </div>
-      </div>
-    );
-  }
-  
-  if (currentPage === 'results') {
-    return (
-      <div className="antialiased">
-        <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
-        <div className="relative z-10">
-          <Results onGoBack={() => setCurrentPage('home')} />
-        </div>
-      </div>
-    );
-  }
+  // Removed the rendering blocks for 'product' and 'results' pages.
 
   // --- Default Page ('home') ---
-  // Since 'home' is now the initial state, this will be the first thing the user sees.
   return (
     <div className="antialiased">
       <div id="particles-js"></div>
@@ -143,8 +108,7 @@ const App = () => {
             onHomeClick={handleHomeClick}
             onLoginClick={handleLoginClick} 
             onSignupClick={handleSignupClick} 
-            onProductClick={handleProductClick} 
-            onResultsClick={handleResultsClick} 
+            // Removed onProductClick and onResultsClick from props
         />
 
         <main className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -157,7 +121,6 @@ const App = () => {
               Secretary.AI automatically transcribes, summarizes, and extracts key action items from your meetings. Stop taking notes and start focusing on the conversation.
             </p>
             <div className="fade-in-up" style={{ transitionDelay: '0.4s' }}>
-              {/* THIS IS THE MODIFIED LINE */}
               <a href="#login" onClick={handleLoginClick} className="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg">
                 Get Started For Free
               </a>
