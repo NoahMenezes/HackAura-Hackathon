@@ -1,14 +1,26 @@
-// src/components/Signup.js
-
 import React from 'react';
 
-const Signup = ({ onGoBack }) => {
+// 1. Accept the new onSignupSuccess prop
+const Signup = ({ onGoBack, onSignupSuccess }) => {
+  // 2. Create a handler for form submission
+  const handleSubmit = (event) => {
+    event.preventDefault(); // Prevents the browser from reloading
+
+    // NOTE: In a real app, you'd validate the inputs and
+    // make an API call to create a new user.
+
+    // Simulate a successful signup
+    console.log('Signup successful!');
+    onSignupSuccess(); // Navigate to the main app page
+  };
+
   return (
     <div className="flex items-center justify-center min-h-screen bg-transparent p-4">
       <div className="w-full max-w-md p-8 space-y-6 rounded-2xl feature-card text-center">
         <h2 className="text-3xl font-bold text-white">Create Your Account</h2>
         <p className="text-gray-400">Join Secretary.AI today and streamline your meetings.</p>
-        <form className="space-y-4">
+        {/* 3. Attach the handleSubmit function to the form */}
+        <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
             <label htmlFor="full-name" className="sr-only">
               Full Name

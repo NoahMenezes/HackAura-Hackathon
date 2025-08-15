@@ -1,19 +1,18 @@
-// src/App.js
-
 import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Results from './components/Results';
 import Product from './components/Product';
+import Start from './components/Start';
 import 'particles.js';
 import './App.css';
 
 const App = () => {
-  const [currentPage, setCurrentPage] = useState('home');
+  const [currentPage, setCurrentPage] = useState('start');
 
   useEffect(() => {
-    // This useEffect logic needs to be run on multiple pages, not just 'home'
+    // This useEffect logic needs to be run on multiple pages
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const toggleMenu = () => mobileMenu.classList.toggle('hidden');
@@ -47,6 +46,8 @@ const App = () => {
     };
   }, [currentPage]);
 
+  // --- Navigation Handlers ---
+
   const handleLoginClick = (e) => {
     e.preventDefault();
     setCurrentPage('login');
@@ -63,19 +64,46 @@ const App = () => {
   };
     
   const handleResultsClick = (e) => {
-      e.preventDefault();
-      setCurrentPage('results');
+    e.preventDefault();
+    setCurrentPage('results');
   };
 
   const handleGoBack = () => {
+    // Go back to the start page from login/signup
+    setCurrentPage('start');
+  };
+
+  /**
+   * This function is called after a successful login or signup
+   * to navigate the user to the main content page.
+   */
+  const handleAuthSuccess = () => {
     setCurrentPage('home');
   };
+
+  // --- Page Rendering Logic ---
+
+  if (currentPage === 'start') {
+    return (
+      <div className="antialiased">
+        <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
+        <div className="relative z-10">
+          <Start 
+            onNavigateToLogin={handleLoginClick} 
+            onNavigateToSignup={handleSignupClick} 
+          />
+        </div>
+      </div>
+    );
+  }
 
   if (currentPage === 'login') {
     return (
       <div className="antialiased">
         <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
-        <Login onGoBack={handleGoBack} />
+        <div className="relative z-10">
+          <Login onGoBack={handleGoBack} onLoginSuccess={handleAuthSuccess} />
+        </div>
       </div>
     );
   }
@@ -84,7 +112,9 @@ const App = () => {
     return (
       <div className="antialiased">
         <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
-        <Signup onGoBack={handleGoBack} />
+        <div className="relative z-10">
+          <Signup onGoBack={handleGoBack} onSignupSuccess={handleAuthSuccess} />
+        </div>
       </div>
     );
   }
@@ -93,7 +123,9 @@ const App = () => {
     return (
       <div className="antialiased">
         <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
-        <Product onGoBack={handleGoBack} />
+        <div className="relative z-10">
+          <Product onGoBack={() => setCurrentPage('home')} />
+        </div>
       </div>
     );
   }
@@ -102,11 +134,14 @@ const App = () => {
     return (
       <div className="antialiased">
         <div id="particles-js" className="fixed top-0 left-0 w-full h-full z-0"></div>
-        <Results onGoBack={handleGoBack} />
+        <div className="relative z-10">
+          <Results onGoBack={() => setCurrentPage('home')} />
+        </div>
       </div>
     );
   }
 
+  // --- Default Page ('home') ---
   return (
     <div className="antialiased">
       <div id="particles-js"></div>
@@ -123,7 +158,7 @@ const App = () => {
               Secretary.AI automatically transcribes, summarizes, and extracts key action items from your meetings. Stop taking notes and start focusing on the conversation.
             </p>
             <div className="fade-in-up" style={{ transitionDelay: '0.4s' }}>
-              <a href="#" className="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg">
+              <a href="#signup" onClick={handleSignupClick} className="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg">
                 Get Started For Free
               </a>
             </div>
@@ -207,7 +242,6 @@ const App = () => {
           </section>
         </main>
         
-        {/* Footer with a large Secretary.AI title */}
         <footer className="bg-black bg-opacity-20 mt-20">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div className="w-full text-center">
@@ -217,7 +251,7 @@ const App = () => {
                 <p className="text-lg md:text-xl text-gray-400">The future of meetings.</p>
             </div>
             <div className="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500">
-              <p><a href="https://opensource.org/license/mit"> &copy; 2025 Secretary.AI. All rights reserved.</a></p>
+              <p>&copy; 2025 Secretary.AI. All rights reserved.</p>
             </div>
           </div>
         </footer>
