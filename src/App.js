@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Header from './components/Header';
 import Login from './components/Login';
 import Signup from './components/Signup';
-import Product from './components/Product'; // Make sure Product is imported
+import Product from './components/Product';
 import 'particles.js';
 import './App.css';
 
@@ -11,33 +11,29 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
 
   useEffect(() => {
-    // This effect handles particles and animations for all pages
+    // ... (no changes in this useEffect)
     const menuBtn = document.getElementById('menu-btn');
     const mobileMenu = document.getElementById('mobile-menu');
     const toggleMenu = () => mobileMenu.classList.toggle('hidden');
     if (menuBtn) menuBtn.addEventListener('click', toggleMenu);
-
-    const observer = new IntersectionObserver(
-      (entries) => {
+    
+    const observer = new IntersectionObserver((entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-          }
+            if (entry.isIntersecting) {
+                entry.target.classList.add('visible');
+            }
         });
-      },
-      { threshold: 0.1 }
-    );
+    }, { threshold: 0.1 });
 
     const fadeUpElements = document.querySelectorAll('.fade-in-up');
     fadeUpElements.forEach((el) => observer.observe(el));
-    
-    // Initialize particles.js, but make sure not to re-initialize if Product.js already did
+
     if (!document.querySelector('#particles-js canvas')) {
-      window.particlesJS('particles-js', {
-        "particles": { "number": { "value": 50, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8A2BE2" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#4B0082", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" } },
-        "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } },
-        "retina_detect": true
-      });
+        window.particlesJS('particles-js', {
+            "particles": { "number": { "value": 50, "density": { "enable": true, "value_area": 800 } }, "color": { "value": "#8A2BE2" }, "shape": { "type": "circle" }, "opacity": { "value": 0.5, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } }, "size": { "value": 3, "random": true }, "line_linked": { "enable": true, "distance": 150, "color": "#4B0082", "opacity": 0.4, "width": 1 }, "move": { "enable": true, "speed": 2, "direction": "none", "out_mode": "out" } },
+            "interactivity": { "detect_on": "canvas", "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true }, "modes": { "grab": { "distance": 140, "line_linked": { "opacity": 1 } }, "push": { "particles_nb": 4 } } },
+            "retina_detect": true
+        });
     }
 
     return () => {
@@ -46,7 +42,6 @@ const App = () => {
     };
   }, [currentPage]);
 
-  // --- Navigation Handlers ---
   const handleLoginClick = (e) => {
     e.preventDefault();
     setCurrentPage('login');
@@ -63,7 +58,6 @@ const App = () => {
 
   const handleAuthSuccess = () => {
     setIsAuthenticated(true);
-    // After login, set the page to 'product'
     setCurrentPage('product');
   };
 
@@ -72,9 +66,6 @@ const App = () => {
     setCurrentPage('home');
   };
 
-  // --- Page Rendering Logic ---
-
-  // Render Login page separately
   if (currentPage === 'login') {
     return (
       <div className="antialiased">
@@ -86,7 +77,6 @@ const App = () => {
     );
   }
 
-  // Render Signup page separately
   if (currentPage === 'signup') {
     return (
       <div className="antialiased">
@@ -97,126 +87,122 @@ const App = () => {
       </div>
     );
   }
-
-  // --- Render the main application layout (for Home and Product pages) ---
-  return (
-    <div className="antialiased">
-      <div id="particles-js"></div>
-      <div className="relative z-10">
+  
+  if (currentPage === 'product') {
+    return (
+      <div className="antialiased">
         <Header 
-          isAuthenticated={isAuthenticated}
-          onLoginClick={handleLoginClick} 
-          onSignupClick={handleSignupClick}
-          onSignOut={handleSignOut}
+          isAuthenticated={isAuthenticated} 
+          onSignOut={handleSignOut} 
           onGoBack={handleGoBack}
         />
-
-        {/* This is the main content area that will switch between Home and Product */}
-        {currentPage === 'home' && (
-          <main className="container mx-auto px-4 sm:px-6 lg:px-8">
-            {/* Hero Section */}
-            <section className="text-center py-20 md:py-32">
-              <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-4 hero-glow fade-in-up">
-                The #1 AI Teammate for <br /> Your Meetings
-              </h1>
-              <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 fade-in-up" style={{ transitionDelay: '0.2s' }}>
-                Secretary.AI automatically transcribes, summarizes, and extracts key action items from your meetings. Stop taking notes and start focusing on the conversation.
-              </p>
-              <div className="fade-in-up" style={{ transitionDelay: '0.4s' }}>
-                <a href="#login" onClick={handleLoginClick} className="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg">
-                  Get Started For Free
-                </a>
-              </div>
-            </section>
-            <hr className="my-8 border-gray-800" />
-            {/* Features Section */}
-            <section className="py-20">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 fade-in-up">
-                  Go Beyond Notetaking with 200+ AI Apps
-                </h2>
-                <p className="text-lg text-gray-400 max-w-2xl mx-auto fade-in-up" style={{ transitionDelay: '0.2s' }}>
-                  Our AI helps you automatically extract key details, generate follow-up emails, score candidates, and other insights from every meeting.
-                </p>
-              </div>
-              <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                {/* Card 1: Summarizer */}
-                <div className="feature-card p-8 rounded-2xl fade-in-up">
-                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-purple-500 bg-opacity-20 mb-6">
-                    <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3">Instant Summaries</h3>
-                  <p className="text-gray-400">Get concise, AI-generated summaries of your entire meeting in seconds. Perfect for catching up or sharing with stakeholders.</p>
-                </div>
-                {/* Card 2: Task Assignment */}
-                <div className="feature-card p-8 rounded-2xl fade-in-up" style={{ transitionDelay: '0.2s' }}>
-                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-pink-500 bg-opacity-20 mb-6">
-                    <svg className="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3">Automatic Task Assignment</h3>
-                  <p className="text-gray-400">Our AI intelligently identifies action items and suggests assignees based on the conversation, streamlining your workflow.</p>
-                </div>
-                {/* Card 3: Transcript Analysis */}
-                <div className="feature-card p-8 rounded-2xl fade-in-up" style={{ transitionDelay: '0.4s' }}>
-                  <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 bg-opacity-20 mb-6">
-                    <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                  </div>
-                  <h3 className="text-xl font-bold text-white mb-3">Deep Transcript Analysis</h3>
-                  <p className="text-gray-400">Search your entire meeting history, identify key topics, and analyze sentiment to gain deeper insights from your discussions.</p>
-                </div>
-              </div>
-            </section>
-            <hr className="my-8 border-gray-800" />
-            {/* How it works section */}
-            <section className="py-20">
-              <div className="text-center mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 fade-in-up">How It Works in 3 Simple Steps</h2>
-              </div>
-              <div className="flex flex-col md:flex-row justify-between items-center space-y-12 md:space-y-0 md:space-x-8">
-                {/* Step 1 */}
-                <div className="text-center max-w-sm fade-in-up">
-                  <div className="mb-4 text-5xl font-bold text-purple-400">1</div>
-                  <h3 className="text-xl font-bold text-white mb-2">Record & Upload</h3>
-                  <p className="text-gray-400">Connect your calendar or simply upload your meeting audio/video file. We integrate with Zoom, Google Meet, and more.</p>
-                </div>
-                {/* Step 2 */}
-                <div className="text-center max-w-sm fade-in-up" style={{ transitionDelay: '0.2s' }}>
-                  <div className="mb-4 text-5xl font-bold text-purple-400">2</div>
-                  <h3 className="text-xl font-bold text-white mb-2">AI Processing</h3>
-                  <p className="text-gray-400">Our advanced AI gets to work, transcribing with high accuracy, identifying speakers, and analyzing the content.</p>
-                </div>
-                {/* Step 3 */}
-                <div className="text-center max-w-sm fade-in-up" style={{ transitionDelay: '0.4s' }}>
-                  <div className="mb-4 text-5xl font-bold text-purple-400">3</div>
-                  <h3 className="text-xl font-bold text-white mb-2">Review & Export</h3>
-                  <p className="text-gray-400">Receive a detailed summary with action items. Review, edit, and export tasks to your favorite project management tools.</p>
-                </div>
-              </div>
-            </section>
-          </main>
-        )}
-
-        {/* When the user is logged in, show the Product component */}
-        {currentPage === 'product' && (
-            <main className="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
-                <Product />
-            </main>
-        )}
-        
-        <footer className="bg-black bg-opacity-20 mt-20">
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
-            <div className="w-full text-center">
-              <h2 className="text-6xl md:text-8xl font-black text-white hero-glow mb-2 tracking-widest">
-                SECRETARY.AI
-              </h2>
-              <p className="text-lg md:text-xl text-gray-400">The future of meetings.</p>
-            </div>
-            <div className="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500">
-              <p>&copy; 2025 Secretary.AI. All rights reserved.</p>
-            </div>
-          </div>
-        </footer>
+        <div className="flex items-center justify-center p-4">
+          {/* --- PASS THE onGoBack FUNCTION HERE --- */}
+          <Product onGoBack={handleGoBack} />
+        </div>
       </div>
+    );
+  }
+
+  // --- Default Page ('home') ---
+  return (
+    <div className="antialiased">
+        {/* ... (rest of the home page code is unchanged) ... */}
+        <div id="particles-js"></div>
+        <div className="relative z-10">
+            <Header 
+                isAuthenticated={isAuthenticated}
+                onLoginClick={handleLoginClick} 
+                onSignupClick={handleSignupClick}
+                onSignOut={handleSignOut}
+                onGoBack={handleGoBack}
+            />
+            <main className="container mx-auto px-4 sm:px-6 lg:px-8">
+                <section className="text-center py-20 md:py-32">
+                    <h1 className="text-4xl md:text-6xl font-black text-white leading-tight mb-4 hero-glow fade-in-up">
+                        The #1 AI Teammate for <br /> Your Meetings
+                    </h1>
+                    <p className="text-lg md:text-xl text-gray-300 max-w-3xl mx-auto mb-8 fade-in-up" style={{ transitionDelay: '0.2s' }}>
+                        Secretary.AI automatically transcribes, summarizes, and extracts key action items from your meetings. Stop taking notes and start focusing on the conversation.
+                    </p>
+                    <div className="fade-in-up" style={{ transitionDelay: '0.4s' }}>
+                        <a href="#login" onClick={handleLoginClick} className="btn-primary text-white font-bold py-3 px-8 rounded-lg text-lg">
+                            Get Started For Free
+                        </a>
+                    </div>
+                </section>
+                <hr className="my-8 border-gray-800" />
+                <section className="py-20">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 fade-in-up">
+                            Go Beyond Notetaking with 200+ AI Apps
+                        </h2>
+                        <p className="text-lg text-gray-400 max-w-2xl mx-auto fade-in-up" style={{ transitionDelay: '0.2s' }}>
+                            Our AI helps you automatically extract key details, generate follow-up emails, score candidates, and other insights from every meeting.
+                        </p>
+                    </div>
+                    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <div className="feature-card p-8 rounded-2xl fade-in-up">
+                            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-purple-500 bg-opacity-20 mb-6">
+                                <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-3">Instant Summaries</h3>
+                            <p className="text-gray-400">Get concise, AI-generated summaries of your entire meeting in seconds. Perfect for catching up or sharing with stakeholders.</p>
+                        </div>
+                        <div className="feature-card p-8 rounded-2xl fade-in-up" style={{ transitionDelay: '0.2s' }}>
+                            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-pink-500 bg-opacity-20 mb-6">
+                                <svg className="w-6 h-6 text-pink-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-3">Automatic Task Assignment</h3>
+                            <p className="text-gray-400">Our AI intelligently identifies action items and suggests assignees based on the conversation, streamlining your workflow.</p>
+                        </div>
+                        <div className="feature-card p-8 rounded-2xl fade-in-up" style={{ transitionDelay: '0.4s' }}>
+                            <div className="flex items-center justify-center h-12 w-12 rounded-full bg-blue-500 bg-opacity-20 mb-6">
+                                <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                            </div>
+                            <h3 className="text-xl font-bold text-white mb-3">Deep Transcript Analysis</h3>
+                            <p className="text-gray-400">Search your entire meeting history, identify key topics, and analyze sentiment to gain deeper insights from your discussions.</p>
+                        </div>
+                    </div>
+                </section>
+                <hr className="my-8 border-gray-800" />
+                <section className="py-20">
+                    <div className="text-center mb-16">
+                        <h2 className="text-3xl md:text-4xl font-bold text-white mb-4 fade-in-up">How It Works in 3 Simple Steps</h2>
+                    </div>
+                    <div className="flex flex-col md:flex-row justify-between items-center space-y-12 md:space-y-0 md:space-x-8">
+                        <div className="text-center max-w-sm fade-in-up">
+                            <div className="mb-4 text-5xl font-bold text-purple-400">1</div>
+                            <h3 className="text-xl font-bold text-white mb-2">Record & Upload</h3>
+                            <p className="text-gray-400">Connect your calendar or simply upload your meeting audio/video file. We integrate with Zoom, Google Meet, and more.</p>
+                        </div>
+                        <div className="text-center max-w-sm fade-in-up" style={{ transitionDelay: '0.2s' }}>
+                            <div className="mb-4 text-5xl font-bold text-purple-400">2</div>
+                            <h3 className="text-xl font-bold text-white mb-2">AI Processing</h3>
+                            <p className="text-gray-400">Our advanced AI gets to work, transcribing with high accuracy, identifying speakers, and analyzing the content.</p>
+                        </div>
+                        <div className="text-center max-w-sm fade-in-up" style={{ transitionDelay: '0.4s' }}>
+                            <div className="mb-4 text-5xl font-bold text-purple-400">3</div>
+                            <h3 className="text-xl font-bold text-white mb-2">Review & Export</h3>
+                            <p className="text-gray-400">Receive a detailed summary with action items. Review, edit, and export tasks to your favorite project management tools.</p>
+                        </div>
+                    </div>
+                </section>
+            </main>
+            <footer className="bg-black bg-opacity-20 mt-20">
+                <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+                    <div className="w-full text-center">
+                        <h2 className="text-6xl md:text-8xl font-black text-white hero-glow mb-2 tracking-widest">
+                            SECRETARY.AI
+                        </h2>
+                        <p className="text-lg md:text-xl text-gray-400">The future of meetings.</p>
+                    </div>
+                    <div className="mt-12 border-t border-gray-800 pt-8 text-center text-gray-500">
+                        <p>&copy; 2025 Secretary.AI. All rights reserved.</p>
+                    </div>
+                </div>
+            </footer>
+        </div>
     </div>
   );
 };
