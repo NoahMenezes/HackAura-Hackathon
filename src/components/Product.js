@@ -143,7 +143,7 @@ const Product = ({ onGoBack }) => {
     };
 
     const getAiInsights = async (file) => {
-        const apiKey = "AIzaSyCOjLEvOdZZzk4nCOUc1UhfX1eKfNBm1qk";
+        const apiKey = "";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
         const audioBase64 = await fileToBase64(file);
         const prompt = `You are "Secretary.AI", an expert meeting assistant. You have been given an audio recording of a meeting. Your tasks are to:
