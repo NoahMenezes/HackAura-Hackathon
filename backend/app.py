@@ -60,7 +60,7 @@ def process_meeting_endpoint():
 
         # --- C. Full Integration Logic ---
 
-        # STEP 1: (Kanak's Task) Transcribe the audio file to text.
+        # STEP 1: (Vibhu's Task) Transcribe the audio file to text.
         # This is where the call to AssemblyAI or another STT API will go.
         # For now, we use a hardcoded sample transcript to test the flow.
         # To-Do: Replace this with the real transcript from the STT API.
@@ -76,7 +76,7 @@ def process_meeting_endpoint():
         """
         print("Using placeholder transcript for processing.")
 
-        # STEP 2: (Vibhu's Task) Send the transcript to the Gemini API.
+        # STEP 2: (Kanak's Task) Send the transcript to the Gemini API.
         # We call the imported function to get the structured JSON data.
         if not transcript_text:
             return jsonify({
