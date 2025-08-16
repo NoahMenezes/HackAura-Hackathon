@@ -1,36 +1,51 @@
 import React from 'react';
 
-// 1. Accept the new onGoBack prop here
-const Header = ({ isAuthenticated, onSignOut, onLoginClick, onSignupClick, onGoBack }) => {
+const Header = ({ 
+  isAuthenticated, 
+  onSignOut, 
+  onLoginClick, 
+  onSignupClick, 
+  onGoBack,
+  onFeaturesClick,
+  onHowItWorksClick 
+}) => {
   return (
     <header className="py-4 px-4 sm:px-6 lg:px-8 relative z-10">
       <nav className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-8">
-          {/* 2. The onClick here will now work correctly */}
-          <a href="#" onClick={(e) => { e.preventDefault(); if (isAuthenticated) return; onGoBack(); }} className="text-2xl font-bold text-white">
+          {/* Use onGoBack for the main logo link to return home */}
+          <a href="#" onClick={onGoBack} className="text-2xl font-bold text-white">
             Secretary.AI
           </a>
         </div>
 
         {/* --- Desktop Menu --- */}
-        <div className="hidden md:flex items-center space-x-4">
-          {isAuthenticated ? (
-            <button
-              onClick={onSignOut}
-              className="bg-red-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
-            >
-              Sign Out
-            </button>
-          ) : (
-            <>
-              <a href="#login" onClick={onLoginClick} className="hover:text-purple-400 transition-colors">
-                Login
-              </a>
-              <a href="#signup" onClick={onSignupClick} className="bg-white text-purple-700 font-semibold px-4 py-2 rounded-lg hover:bg-purple-200 transition-all">
-                Sign Up
-              </a>
-            </>
-          )}
+        <div className="hidden md:flex items-center space-x-8">
+          {/* --- NEW HOME BUTTON ADDED HERE --- */}
+          <a href="#" onClick={onGoBack} className="hover:text-purple-400 transition-colors">Home</a>
+          
+          <a href="#" onClick={onFeaturesClick} className="hover:text-purple-400 transition-colors">Features</a>
+          <a href="#" onClick={onHowItWorksClick} className="hover:text-purple-400 transition-colors">How It Works</a>
+          
+          <div className='flex items-center space-x-4'>
+            {isAuthenticated ? (
+              <button
+                onClick={onSignOut}
+                className="bg-red-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
+              >
+                Sign Out
+              </button>
+            ) : (
+              <>
+                <a href="#" onClick={onLoginClick} className="hover:text-purple-400 transition-colors">
+                  Login
+                </a>
+                <a href="#" onClick={onSignupClick} className="bg-white text-purple-700 font-semibold px-4 py-2 rounded-lg hover:bg-purple-200 transition-all">
+                  Sign Up
+                </a>
+              </>
+            )}
+          </div>
         </div>
 
         {/* --- Mobile Menu Button --- */}
@@ -46,19 +61,22 @@ const Header = ({ isAuthenticated, onSignOut, onLoginClick, onSignupClick, onGoB
       {/* --- Mobile Menu --- */}
       <div id="mobile-menu" className="hidden md:hidden mt-4">
         <ul className="flex flex-col space-y-4 items-center">
-        {isAuthenticated ? (
+          {/* --- NEW HOME BUTTON ADDED HERE --- */}
+          <li><a href="#" onClick={onGoBack} className="block text-center hover:text-purple-400 transition-colors">Home</a></li>
+          
+          <li><a href="#" onClick={onFeaturesClick} className="block text-center hover:text-purple-400 transition-colors">Features</a></li>
+          <li><a href="#" onClick={onHowItWorksClick} className="block text-center hover:text-purple-400 transition-colors">How It Works</a></li>
+          <hr className='w-full border-gray-700' />
+          {isAuthenticated ? (
             <li>
-                <button
-                    onClick={onSignOut}
-                    className="w-full bg-red-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-600 transition-all"
-                >
-                    Sign Out
-                </button>
+              <button onClick={onSignOut} className="w-full bg-red-500 text-white font-semibold px-4 py-2 rounded-lg hover:bg-red-600 transition-all">
+                Sign Out
+              </button>
             </li>
           ) : (
             <>
-              <li><a href="#login" onClick={onLoginClick} className="block text-center hover:text-purple-400 transition-colors">Login</a></li>
-              <li><a href="#signup" onClick={onSignupClick} className="block bg-white text-purple-700 font-semibold px-4 py-2 rounded-lg hover:bg-purple-200 transition-all">Sign Up</a></li>
+              <li><a href="#" onClick={onLoginClick} className="block text-center hover:text-purple-400 transition-colors">Login</a></li>
+              <li><a href="#" onClick={onSignupClick} className="block bg-white text-purple-700 font-semibold px-4 py-2 rounded-lg hover:bg-purple-200 transition-all">Sign Up</a></li>
             </>
           )}
         </ul>
