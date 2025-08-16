@@ -1,42 +1,37 @@
-# process_transcript.py
-# Standalone script to process a meeting transcript using the Gemini API
-# and force a structured JSON output.
-
 import os
 import json
 import google.generativeai as genai
 from datetime import date
+from dotenv import load_dotenv # <-- IMPORT THE NEW LIBRARY
 
-# --- Task 1: LLM API Integration ---
-# IMPORTANT: Set your API key as an environment variable before running.
-# In your terminal: export GOOGLE_API_KEY="YOUR_API_KEY_HERE"
+# --- Securely Load API Key ---
+# This line looks for a .env file and loads the variables from it
+# into the environment for your script to use.
+load_dotenv()
+
+# Now, the rest of your script can safely access the key
 try:
-    # Configure the client with your API key
-    genai.configure(api_key=os.environ["GOOGLE_API_KEY"])
-except (AttributeError, KeyError):
+    # Configure the client with your API key from the environment
+    api_key = os.getenv("GOOGLE_API_KEY")
+    if not api_key:
+        raise ValueError("GOOGLE_API_KEY not found in .env file or environment variables.")
+    genai.configure(api_key=api_key)
+
+except (ValueError, AttributeError) as e:
     print("="*80)
-    print("ERROR: API Key not found.")
-    print("Please set the GOOGLE_API_KEY environment variable before running the script.")
-    print("For example, in your terminal: export GOOGLE_API_KEY='your_api_key'")
+    print(f"ERROR: {e}")
+    print("Please make sure you have a .env file in the same directory as this script,")
+    print("and that it contains a line like: GOOGLE_API_KEY='your_api_key'")
     print("="*80)
     exit()
-
 
 # --- Task 2: Craft the "Magic" Prompt ---
 # This function constructs the detailed prompt that guides the AI.
 def create_magic_prompt(transcript_text, meeting_date_str):
     """
     Creates a robust prompt with rules and a one-shot example to guide the LLM.
-
-    Args:
-        transcript_text (str): The raw text from the meeting transcript.
-        meeting_date_str (str): The date of the meeting in 'YYYY-MM-DD' format.
-
-    Returns:
-        str: The fully constructed prompt to be sent to the Gemini API.
     """
-    # The robust "one-shot" prompt. It shows the model exactly what we want.
-    # This is far more reliable than just telling it the format.
+    # ... (The rest of this function is exactly the same as before) ...
     return f"""
 You are an expert AI assistant that functions as a JSON API. Your task is to analyze a meeting transcript and its date, then return a single, valid JSON object conforming to the structure and rules shown in the example below.
 
@@ -93,21 +88,14 @@ Okay team, quick sync. Noah, can you get the user feedback report done by Friday
 def process_transcript_with_gemini(transcript_text):
     """
     Sends the transcript to the Gemini API and gets a structured JSON response.
-
-    Args:
-        transcript_text (str): The raw text from the meeting transcript.
-
-    Returns:
-        dict: A dictionary containing the processed meeting data, or None if an error occurs.
     """
+    # ... (The rest of this function is also exactly the same) ...
     model = genai.GenerativeModel('gemini-1.5-flash')
     today = date.today().strftime("%Y-%m-%d")
     prompt = create_magic_prompt(transcript_text, today)
     generation_config = genai.types.GenerationConfig(
         response_mime_type="application/json"
     )
-
-    # *** NEW: Add a timeout to the request to prevent it from hanging forever ***
     request_options = {"timeout": 60}
 
     try:
