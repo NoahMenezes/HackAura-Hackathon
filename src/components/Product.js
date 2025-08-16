@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
 
-// --- ACCEPT THE onGoBack PROP HERE ---
 const Product = ({ onGoBack }) => {
-    // --- STATE MANAGEMENT ---
     const [view, setView] = useState('upload');
     const [file, setFile] = useState(null);
     const [isDragging, setIsDragging] = useState(false);
@@ -13,7 +11,6 @@ const Product = ({ onGoBack }) => {
 
     const fileInputRef = useRef(null);
 
-    // ... (rest of the component logic is unchanged) ...
     useEffect(() => {
         if (window.particlesJS) {
             window.particlesJS('particles-js', {
@@ -146,7 +143,7 @@ const Product = ({ onGoBack }) => {
     };
 
     const getAiInsights = async (file) => {
-        const apiKey = "YOUR_GEMINI_API_KEY";
+        const apiKey = "AIzaSyCOjLEvOdZZzk4nCOUc1UhfX1eKfNBm1qk";
         const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
         const audioBase64 = await fileToBase64(file);
         const prompt = `You are "Secretary.AI", an expert meeting assistant. You have been given an audio recording of a meeting. Your tasks are to:
@@ -196,7 +193,6 @@ Do not include any text or formatting outside of this JSON object.`;
     return (
         <>
             <style>{`
-                /* ... (styles are unchanged) ... */
                 :root {
                     --bg-dark: #0c0a1e; --bg-container: rgba(22, 18, 48, 0.7); --border-color: rgba(255, 255, 255, 0.15);
                     --text-primary: #F9FAFB; --text-secondary: #D1D5DB; --text-subtle: #9CA3AF;
@@ -289,7 +285,7 @@ Do not include any text or formatting outside of this JSON object.`;
                                 onClick={() => fileInputRef.current.click()}
                                 onDragEnter={handleDrag} onDragOver={handleDrag} onDragLeave={handleDrag} onDrop={handleDrop}
                             >
-                                <input type="file" ref={fileInputRef} className="hidden" accept="audio/*" onChange={onFileChange} />
+                                <input type="file" ref={fileInputRef} className="hidden" accept="audio/*" onChange={onFileChange} style={{display: 'none'}}/>
                                 <div className="file-drop-content pointer-events-none">
                                     <svg className="icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" d="M12 16.5V9.75m0 0l-3.75 3.75M12 9.75l3.75 3.75M3 17.25V8.25c0-1.121.904-2.025 2.025-2.025h13.95A2.025 2.025 0 0121 8.25v9a2.025 2.025 0 01-2.025 2.025H5.025A2.025 2.025 0 013 17.25z" /></svg>
                                     <p><strong>{file ? "File Selected:" : "Drag & drop an audio file here"}</strong></p>
@@ -305,7 +301,6 @@ Do not include any text or formatting outside of this JSON object.`;
                                 >
                                     Process Meeting
                                 </button>
-                                {/* --- NEW BACK BUTTON ADDED HERE --- */}
                                 <button
                                     className="btn btn-secondary"
                                     style={{background: 'none', border: 'none', marginTop: '0.5rem'}}
@@ -345,12 +340,40 @@ Do not include any text or formatting outside of this JSON object.`;
                                         className={`tab-btn ${activeTab === tabName ? 'active' : ''}`}
                                         onClick={() => setActiveTab(tabName)}
                                     >
-                                        {tabName === 'actions' ? 'Action Items' : tabName === 'email' ? 'Draft Email' : tabName.charAt(0).toUpperCase() + tabName.slice(1)}
+                                        {tabName === 'summary' ? 'AI Summary' : tabName === 'actions' ? 'Action Items' : tabName === 'email' ? 'Draft Email' : tabName.charAt(0).toUpperCase() + tabName.slice(1)}
                                     </button>
                                 ))}
                             </nav>
                             <div className="tab-content">
-                                {/* ... (rest of the results view code is unchanged) ... */}
+                                {activeTab === 'transcript' && (
+                                    <div className="results-card">
+                                        <button onClick={() => copyToClipboard(results.transcript)} className="copy-btn" title="Copy Transcript">
+                                            <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                        </button>
+                                        <pre className="output-content">{results.transcript}</pre>
+                                    </div>
+                                )}
+                                {activeTab === 'summary' && (
+                                    <div className="results-card">
+                                        <button onClick={() => copyToClipboard(results.summary)} className="copy-btn" title="Copy Summary">
+                                            <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                        </button>
+                                        <p className="output-content">{results.summary}</p>
+                                    </div>
+                                )}
+                                {activeTab === 'actions' && (
+                                    <div className="action-items-grid">
+                                        {renderActionItems()}
+                                    </div>
+                                )}
+                                {activeTab === 'email' && (
+                                    <div className="results-card">
+                                        <button onClick={() => copyToClipboard(results.email)} className="copy-btn" title="Copy Email">
+                                            <svg className="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                                        </button>
+                                        <pre className="output-content">{results.email}</pre>
+                                    </div>
+                                )}
                             </div>
                         </main>
                     </div>
