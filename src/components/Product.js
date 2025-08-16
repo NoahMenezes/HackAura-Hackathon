@@ -142,35 +142,36 @@ const Product = ({ onGoBack }) => {
         });
     };
 
-    const getAiInsights = async (file) => {
-        const apiKey = "";
-        const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
-        const audioBase64 = await fileToBase64(file);
-        const prompt = `You are "Secretary.AI", an expert meeting assistant. You have been given an audio recording of a meeting. Your tasks are to:
-1. **Transcribe** the entire audio accurately, identifying different speakers if possible (e.g., "Speaker 1:", "Speaker 2:").
-2. **Summarize** the meeting, capturing the key discussion points, decisions, and outcomes.
-3. **Extract Action Items** and list them. For each action item, identify the owner, the task, and the deadline if mentioned.
-4. **Draft a Follow-up Email** that includes the summary and the list of action items, formatted professionally.
+const getAiInsights = async (file) => {
+    const audioBase64 = await fileToBase64(file);
 
-Please provide the output in a single, clean JSON object with the following structure:
-{"transcript": "...", "summary": "...", "actionItems": [{ "owner": "...", "task": "...", "deadline": "..." }], "email": "..."}
-Do not include any text or formatting outside of this JSON object.`;
+    // The API URL is now your own serverless function
+    const apiUrl = '/api/generateInsights'; 
 
-        const payload = {
-            contents: [{ role: "user", parts: [{ text: prompt }, { inlineData: { mimeType: file.type, data: audioBase64 } }] }],
-            generationConfig: { responseMimeType: "application/json" }
-        };
-
-        const response = await fetch(apiUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-        if (!response.ok) {
-            const errorBody = await response.json();
-            console.error("API Error:", errorBody);
-            throw new Error(`API request failed with status ${response.status}`);
+    const payload = {
+        file: {
+            mimeType: file.type,
+            data: audioBase64
         }
-        const result = await response.json();
-        return JSON.parse(result.candidates[0].content.parts[0].text);
     };
 
+    // The API key is NO LONGER needed here
+    const response = await fetch(apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+    });
+
+    if (!response.ok) {
+        const errorBody = await response.json();
+        console.error("API Error from serverless function:", errorBody);
+        throw new Error(`Request failed with status ${response.status}`);
+    }
+
+    // The serverless function already parses the JSON, so you just need to get it
+    const result = await response.json(); 
+    return result; 
+};
     const renderActionItems = () => {
         if (!results?.actionItems || results.actionItems.length === 0) {
             return <div className="results-card empty-state col-span-full"><p>No action items were identified in this meeting.</p></div>;
